@@ -24,3 +24,30 @@ body {
 #closeButton {
   margin: 0.1rem !important;
 }
+
+.contenedor {
+  margin-top: 8px ;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction:row;
+  align-items: flex-start;
+}
+
+.FirstDiv{
+  width: 4vh ;
+  height: auto;
+}
+
+.container-fluid{
+display: flex;
+}
+
+.row {
+  padding-left: 0;
+}
+
+#ActualProject {
+  color: white;
+  padding-left: 15px;
+  padding-top: 8px;
+}

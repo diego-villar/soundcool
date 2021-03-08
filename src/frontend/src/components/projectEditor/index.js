@@ -178,7 +178,8 @@ class ProjectEditor extends React.Component {
       let finalBlock = [];
       blocks.forEach(o => {
         finalBlock = finalBlock.concat(o);
-      });
+      })
+      //finalBlock = finalBlock.filter(id => id.length !== 0);
       return (
         <div
           style={{
@@ -898,7 +899,7 @@ class ProjectEditor extends React.Component {
                   <div>
                     <Modal.Body>
                       WARNING: you are leaving the project editor. If you leave
-                      now, you can resume the current progress in Projects ->
+                      now, you can resume the current progress in Projects -
                       Resume Local Project, or you can stay on page and save.
                     </Modal.Body>
                     <Modal.Footer>
@@ -1042,6 +1043,12 @@ class ProjectEditor extends React.Component {
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
+              )}
+              {isUserLoggedIn() && (
+                <NavItem id= "ActualProject">
+                  <span className="fa fa-project-diagram "></span>&nbsp;
+                  {this.state.projectName}
+                </NavItem>
               )}
             </Nav>
             <Nav className="ml-auto" navbar>
