@@ -102,6 +102,7 @@ class ProjectEditor extends React.Component {
       projectsDropdownOpen: false,
       viewDropdownOpen: false,
       sharingDropdownOpen: false,
+      recentProjectsDropdownOpen: false,
       isModalOpen: false,
       isRegisterModalOpen: false,
       isLoginModalOpen: false
@@ -112,6 +113,7 @@ class ProjectEditor extends React.Component {
     this.toggleViewDropdown = this.toggleViewDropdown.bind(this);
     this.toggleProjectsDropdown = this.toggleProjectsDropdown.bind(this);
     this.toggleSharingDropdown = this.toggleSharingDropdown.bind(this);
+    this.toggleRecentProjectsDropdown = this.toggleRecentProjectsDropdown.bind(this);
     this.timer = null;
   }
 
@@ -691,6 +693,10 @@ class ProjectEditor extends React.Component {
     this.setState({ sharingDropdownOpen: !this.state.sharingDropdownOpen });
   }
 
+  toggleRecentProjectsDropdown() {
+    this.setState({ recentProjectsDropdownOpen: !this.state.recentProjectsDropdownOpen });
+  }
+
   handleOnChange = (name, value) => {
     const params = { [name]: value };
     this.setState(params);
@@ -849,6 +855,7 @@ class ProjectEditor extends React.Component {
   };
 
   render() {
+    var recentP = localStorage.getItem('recentProjects') ? JSON.parse(localStorage.getItem('recentProjects')) : [];
     let fileReader;
     let { items } = this.state;
     const openPortsButton = this.checkIfAllPortsAreOpen(this.props.blocks["bs"])
@@ -1044,10 +1051,46 @@ class ProjectEditor extends React.Component {
                   </DropdownMenu>
                 </Dropdown>
               )}
+              {/* RECENT PROJECTS */}
+              {isUserLoggedIn() && (
+                <Dropdown
+                  nav
+                  isOpen={this.state.recentProjectsDropdownOpen}
+                  toggle={this.toggleRecentProjectsDropdown}
+                >
+                  <DropdownToggle nav caret>
+                    Recent Projects
+                  </DropdownToggle>
+                  <DropdownMenu tog>
+                    {/* LAST PROJECT */}
+                    <NavLink
+                      className="dropdown-item border-0"
+                      to = {"/project-editor/" + recentP[recentP.length-1].id }
+                    >
+                      {recentP[recentP.length-1].projectName}
+                      </NavLink>
+                    {/* LAST-1 PROJECTS */}
+                      <NavLink
+                      className="dropdown-item border-0"
+                      to = {"/project-editor/" + recentP[recentP.length-2].id }
+                    >
+                      {recentP[recentP.length-2].projectName}
+                      </NavLink>
+                    {/* LAST-2 PROJECTS */}
+                      <NavLink
+                      className="dropdown-item border-0"
+                      to = {"/project-editor/" + recentP[recentP.length-3].id }
+                    >
+                      {recentP[recentP.length-3].projectName}
+                      </NavLink>
+                  </DropdownMenu>
+                </Dropdown>
+              )}
+              {/* ACTUAL PROJECT */}
               {isUserLoggedIn() && (
                 <NavItem id= "ActualProject">
                   <span className="fa fa-project-diagram "></span>&nbsp;
-                  {this.state.projectName}
+                  Actual project: {this.state.projectName}
                 </NavItem>
               )}
             </Nav>
